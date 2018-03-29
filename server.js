@@ -3,6 +3,7 @@ const express = require("express");
 const hbs = require("hbs");     // handlebars
 const fs = require("fs");
 
+const port = process.env.PORT || 3000;  // Pokud neexistuje port v pc tak to nastavime na 3000
 let app = express();
 
 hbs.registerPartials(__dirname + "/views/partials");        // nastavime odkud budeme pouzivat partials (napr pro header nebo footer)
@@ -24,10 +25,10 @@ app.use((req, res, next) => {        // next = kdyz je express done kdyz dame ne
     next();
 })
 
-app.use((req, res, next) => {        // next = kdyz je express done kdyz dame next() tak pak aplikace pokracuje
-    res.render("maintance.hbs");      // druhy argument je objekt(data), ktera budou dostupna v about.hbs   
-    // nic po tomhle se neprovede (z app)
-})
+// app.use((req, res, next) => {        // next = kdyz je express done kdyz dame next() tak pak aplikace pokracuje
+//     res.render("maintance.hbs");      // druhy argument je objekt(data), ktera budou dostupna v about.hbs   
+//     // nic po tomhle se neprovede (z app)
+// })
 
 app.use(express.static(__dirname + "/public"));   // dirname obsahuje cestu k nasemu projektu
 // pak zadame localhost:3000/help.html
@@ -63,6 +64,6 @@ app.get("/bad", (request, response) => {
     })
 });
 
-app.listen(3000, () => {
-    console.log("Server is up on port 3000");
+app.listen(port, () => {
+    console.log(`Server is up on port ${port}`);
 });       // localhost:3000   // muze obsahovat druhy argument (fci, ktera se provede kdyz je server nacten)
